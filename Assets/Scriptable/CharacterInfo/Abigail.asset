@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1b318e04c935fb349898f0bb6cff8ba2, type: 3}
+  m_Name: Abigail
+  m_EditorClassIdentifier: 
+  charName: Abigail
+  mainColor: {r: 0, g: 0.13331223, b: 1, a: 1}
+  lifeMax: 110
+  manaMax: 10
+  baseInitiative: 3
+  baseArmor: -1
+  spellList:
+  - {fileID: 11400000, guid: 441ac1ef03bfb01449657318d8cb516f, type: 2}
+  - {fileID: 11400000, guid: 65cef2a0070b069429abe6b8e3ea7078, type: 2}
+  - {fileID: 11400000, guid: cab0d6ac674f0e5458fb0721f7ae8f21, type: 2}
+  - {fileID: 11400000, guid: 441ac1ef03bfb01449657318d8cb516f, type: 2}
