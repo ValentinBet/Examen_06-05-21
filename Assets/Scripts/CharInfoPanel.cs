@@ -26,8 +26,8 @@ public class CharInfoPanel : MonoBehaviour
 
     public void UpdateCharInfo(PlayableChar pc)
     {
-        manaText.text = pc.mana + "";
-        lifeText.text = pc.life + "";
+        manaText.text = pc.mana + " mana";
+        lifeText.text = pc.life + " HP";
         armorText.text = pc.armor + "";
         lifeImgFill.fillAmount = (float)pc.life / (float)pc.charInfo.lifeMax;
 

@@ -116,18 +116,15 @@ public class CharacterManager : MonoBehaviour
 
     public void MakeEnemyTurn()
     {
-        print(enemiesInCombat.Count);
-        for (int i = 0; i < enemiesInCombat.Count; i++)
+        foreach (EnemyChar ec in orderedEnemies)
         {
-
-            if (enemiesInCombat[i].life <= 0)
+            if (ec.life <= 0 && enemiesInCombat.Contains(ec))
             {
-
-                CharacterManager.Instance.enemiesInCombat.RemoveAt(i);
+                enemiesInCombat.Remove(ec);
+                enemiesInCombat.RemoveAll(item => item == null);
             }
         }
 
-        enemiesInCombat.RemoveAll(item => item == null);
 
         if (enemiesInCombat.Count <= 0)
         {
