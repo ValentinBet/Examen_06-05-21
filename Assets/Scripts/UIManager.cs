@@ -25,6 +25,7 @@ public class UIManager : MonoBehaviour
     public Transform progressPinRight;
     public GameObject progressPin;
     public GameObject end;
+    public GameObject di;
 
 
     float t;
@@ -52,7 +53,12 @@ public class UIManager : MonoBehaviour
     }
 
 
+    public void DisplayBugInterface()
+    {
 
+        di.SetActive(!di.activeInHierarchy);
+
+    }
     public void Init()
     {
         for (int i = 0; i < CharacterManager.Instance.allied.Count; i++)
