@@ -10,13 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 05b51b39c5ab9464a994e7bf89293b66, type: 3}
-  m_Name: BOOM BOOM
+  m_Name: Struned
   m_EditorClassIdentifier: 
-  spellName: 'BOOM BOOM '
+  spellName: Stunned
   time: 6
   targetType: 1
   teamTarget: 1
-  damagesPerTime: 6
-  manaCost: 8
-  state: 1
+  spellType: 2
+  damagesPerTime: 0
+  manaCost: 3
+  state: 2
   armorGiven: 0
+  healGiven: 0

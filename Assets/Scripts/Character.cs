@@ -29,9 +29,17 @@ public class Character : MonoBehaviour
     }
 
 
-    public virtual void TakeDamages(int damages = 1)
+    public virtual void TakeDamages(int damages = 0)
     {
-        int finalDmg = Mathf.Clamp((damages - armor), 0, int.MaxValue);
+        if (armor < 0)
+        {
+            damages += armor;
+        } else
+        {
+            damages -= armor;
+        }
+
+        int finalDmg = Mathf.Clamp((damages),0,  int.MaxValue);
 
         life -= finalDmg;
 
@@ -41,9 +49,14 @@ public class Character : MonoBehaviour
         }
     }
 
-    public virtual void GainArmor(int armorGain = 1)
+    public virtual void GainArmor(int armorGain = 0)
     {
         armor += armorGain;
+    }
+
+    public virtual void ResetArmor()
+    {
+        armor = charInfo.baseArmor;
     }
     public virtual void Heal(int Heal = 1)
     {
@@ -75,5 +88,8 @@ public class Character : MonoBehaviour
         _state &= ~_stateToRemove;
     }
 
-
+    public virtual void ResetState()
+    {
+        _state = CharacterState.Clear;
+    }
 }

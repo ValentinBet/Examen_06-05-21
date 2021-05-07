@@ -10,14 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 05b51b39c5ab9464a994e7bf89293b66, type: 3}
-  m_Name: Armor
+  m_Name: Boost
   m_EditorClassIdentifier: 
-  spellName: Armor
-  time: 8
+  spellName: Boost
+  time: 6
   targetType: 0
   teamTarget: 0
-  spellType: 1
+  spellType: 2
   damagesPerTime: 0
-  manaCost: 4
-  state: 1
-  armorGiven: 3
+  manaCost: 5
+  state: 4
+  armorGiven: 0
+  healGiven: 0

@@ -1,6 +1,8 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class UIManager : MonoBehaviour
 {
@@ -13,6 +15,7 @@ public class UIManager : MonoBehaviour
     public List<CharInfoPanel> charInfoPanel = new List<CharInfoPanel>();
     public List<EnemyCharInfoPanel> enemyCharInfoPanel = new List<EnemyCharInfoPanel>();
     public List<MeasureDivision> measureDivisions = new List<MeasureDivision>();
+    public List<GameObject> targetFeedback = new List<GameObject>();
 
     Dictionary<Character, CharInfoPanel> charPanelDict = new Dictionary<Character, CharInfoPanel>();
 
@@ -21,6 +24,7 @@ public class UIManager : MonoBehaviour
     public Transform progressPinLeft;
     public Transform progressPinRight;
     public GameObject progressPin;
+    public GameObject end;
 
 
     float t;
@@ -71,7 +75,7 @@ public class UIManager : MonoBehaviour
 
     public CharInfoPanel GetPlbCharPanel(PlayableChar pc)
     {
-       return charPanelDict[pc];
+        return charPanelDict[pc];
     }
 
     public EnemyCharInfoPanel GetEnemyCharPanel(EnemyChar ec)
@@ -94,6 +98,23 @@ public class UIManager : MonoBehaviour
         spellListContainer.SetActive(true);
     }
 
+    internal void SetEnemyTargetState(bool state)
+    {
+        foreach (GameObject go in targetFeedback)
+        {
+            go.SetActive(state);
+        }
+    }
+
+    internal void End()
+    {
+        end.SetActive(true);
+    }
+
+    public void Restart()
+    {
+        SceneManager.LoadScene(0);
+    }
     public void CloseSpellList()
     {
         spellListContainer.SetActive(false);
@@ -108,12 +129,13 @@ public class UIManager : MonoBehaviour
     public void StartMovePin(float timeToReach = 1)
     {
         timeToReachTarget = timeToReach;
-           measureStarted = true;
+        measureStarted = true;
     }
 
     public void StopAndResetPin()
     {
-        progressPin.transform.position = progressPinLeft.position;
+        t = 0;
         measureStarted = false;
+        progressPin.transform.position = progressPinLeft.position;
     }
 }

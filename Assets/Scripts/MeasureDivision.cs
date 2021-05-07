@@ -36,6 +36,7 @@ public class MeasureDivision : MonoBehaviour
         if (spellInfo.time + indexPos > measureLenght)
         {
             ResetPreview();
+            actualPreview = null;
             return; // Cant place spell here
         }
 
@@ -44,6 +45,7 @@ public class MeasureDivision : MonoBehaviour
 
         if (_temp == null)
         {
+            actualPreview = null;
             return; // Cant place spell here
         }
 
@@ -56,7 +58,7 @@ public class MeasureDivision : MonoBehaviour
 
     }
 
-    internal void SetSpellPos(Spell chosenSpell, int indexPos)
+    internal bool SetSpellPos(Spell chosenSpell, int indexPos)
     {
         if (actualPreview != null)
         {
@@ -64,6 +66,10 @@ public class MeasureDivision : MonoBehaviour
             {
                 spi.SetStep(chosenSpell);
             }
+            return true;
+        } else
+        {
+            return false;
         }
     }
 
@@ -72,19 +78,25 @@ public class MeasureDivision : MonoBehaviour
         foreach (StepSpellInfo spi in stepSpellInfos)
         {
             spi.ResetStep();
-            
+
         }
     }
 
     public void ResetPreview()
     {
-        foreach (StepSpellInfo spi in actualPreview)
+        if (actualPreview != null)
         {
-            if (spi.setStep == false)
+            foreach (StepSpellInfo spi in actualPreview)
             {
-                spi.ResetHighlight();
+                if (spi.setStep == false)
+                {
+                    spi.ResetHighlight();
+                }
             }
         }
+
+
+
     }
 
     public List<StepSpellInfo> GetAllStepSpell(int firstIndex, int size)
@@ -109,13 +121,102 @@ public class MeasureDivision : MonoBehaviour
             if (spi.setStep == true)
             {
                 return null;
-            } else
+            }
+            else
             {
                 _returnVal.Add(spi);
             }
         }
 
         return _temp;
+    }
+    public List<StepSpellInfo> GetAllStepSpellWithoutCondition(int firstIndex, int size)
+    {
+
+        if (firstIndex + size > measureLenght)
+        {
+            return null;
+        }
+        List<StepSpellInfo> _temp = new List<StepSpellInfo>();
+
+
+        for (int i = firstIndex; i < firstIndex + size; i++)
+        {
+            _temp.Add(stepSpellInfos[i]);
+        }
+
+        return _temp;
+    }
+
+
+
+    public void GiveOneShotSpellEffect(int firstIndex, int size)
+    {
+        List<StepSpellInfo> _temp = GetAllStepSpellWithoutCondition(firstIndex, size);
+
+        foreach (StepSpellInfo item in _temp)
+        {
+            item.asGivenOneShotEffect = true;
+        }
+
+    }
+
+
+    public int GetFreeSpace()
+    {
+
+        int sizeFree = 0;
+        int maxsizeFree = 0;
+
+        foreach (StepSpellInfo spi in stepSpellInfos)
+        {
+
+            if (spi.setStep == false)
+            {
+                sizeFree++;
+            } else
+            {
+                sizeFree = 0;
+            }
+
+            if (sizeFree > maxsizeFree)
+            {
+                maxsizeFree = sizeFree;
+            }
+        }
+
+
+        return maxsizeFree;
+    }
+
+
+    public int GetMaxSpaceIndex()
+    {
+        int index = 0;
+        int sizeFree = 0;
+        int maxsizeFree = 0;
+
+        for (int i = 0; i < stepSpellInfos.Count; i++)
+        {
+            if (stepSpellInfos[i].setStep == false)
+            {
+                sizeFree++;
+            }
+            else
+            {
+                sizeFree = 0;
+            }
+
+            if (sizeFree > maxsizeFree)
+            {
+                maxsizeFree = sizeFree;
+                index = (i - (maxsizeFree - 1)) ;
+            }
+        }
+
+
+
+        return index;
     }
 
 }

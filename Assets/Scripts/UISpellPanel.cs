@@ -15,15 +15,16 @@ public class UISpellPanel : MonoBehaviour
     {
         spell = pickSpell;
         spellNameText.text = spell.spellName;
-        manaCostText.text = spell.manaCost + ""; 
-        measureTimeText.text = spell.time + "";
-        stateDmgText.text = (spell.state).ToString() + " - <color=red> Dmg : " + spell.damagesPerTime + "</color>";
+        manaCostText.text = spell.manaCost + " mana"; 
+        measureTimeText.text = "Sur " +  spell.time + " temps" ;
+        stateDmgText.text = "Etat appliqués = " + (spell.state).ToString() + " <color=red> Dégats = " + spell.damagesPerTime + "</color>";
 
     }
 
     public void ChooseThisSpell()
     {
         UIManager.Instance.CloseSpellList();
+        CharacterManager.Instance.SetEnemyTargetState(false);
 
         if (spell.targetType == TargetType.One)
         {

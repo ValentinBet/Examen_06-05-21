@@ -8,6 +8,9 @@ public static class GameData
 	[System.Flags]
 	public enum CharacterState
 	{
-		Clear = 1 << 0
+		none = 0,
+		Clear = 1,
+		Stunned = 2,
+		Boosted = 4
 	}
 }

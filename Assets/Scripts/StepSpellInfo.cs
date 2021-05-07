@@ -10,22 +10,21 @@ public class StepSpellInfo : MonoBehaviour
     public Spell spellInfo;
     public TeamTarget originTeam = TeamTarget.Allied;
 
-
-
-
     public int indexPos = 0;
     public Image img;
     public MeasureDivision parentMeasure;
     public bool setStep = false;
+    public bool asGivenOneShotEffect = false;
+
+    public GameObject armorImg;
+    public GameObject healImg;
+    public GameObject allAttackImg;
+    public GameObject attackImg;
+
     public void Init(int index, MeasureDivision parent)
     {
         indexPos = index;
         parentMeasure = parent;
-    }
-
-    public void InitSpell(Spell spell)
-    {
-        spellInfo = spell;
     }
 
     public void Hover()
@@ -50,8 +49,11 @@ public class StepSpellInfo : MonoBehaviour
     {
         if (TurnManager.Instance.chosenSpell != null && TurnManager.Instance.charTurn == parentMeasure.autorizedChar && CharacterManager.Instance.targeting == false)
         {
-            parentMeasure.SetSpellPos(TurnManager.Instance.chosenSpell, indexPos);
-            TurnManager.Instance.NextChar();
+            if (parentMeasure.SetSpellPos(TurnManager.Instance.chosenSpell, indexPos))
+            {
+                TurnManager.Instance.NextChar();
+            } 
+
         }
     }
     public void ExitHover()
@@ -68,15 +70,54 @@ public class StepSpellInfo : MonoBehaviour
         target = null;
         originTeam = TeamTarget.Allied;
         setStep = false;
+        asGivenOneShotEffect = false;
+        allAttackImg.SetActive(false);
+        attackImg.SetActive(false);
+        armorImg.SetActive(false);
+        healImg.SetActive(false);
         ResetHighlight();
     }
 
-    internal void SetStep(Spell chosenSpell)
+    internal void SetStep(Spell chosenSpell, EnemyChar? inEnemyTurm = null)
     {
         spellInfo = chosenSpell;
         setStep = true;
-        img.color = TurnManager.Instance.charTurn.charInfo.mainColor;
-        target = TurnManager.Instance.target;
+
+        if (inEnemyTurm != null)
+        {
+            img.color = inEnemyTurm.charInfo.mainColor;
+            target = parentMeasure.autorizedChar;
+        } else
+        {
+            img.color = TurnManager.Instance.charTurn.charInfo.mainColor;
+            target = TurnManager.Instance.target;
+        }
+
+        switch (chosenSpell.spellType)
+        {
+            case SpellType.Attack:
+                switch (chosenSpell.targetType)
+                {
+                    case TargetType.All:
+                        allAttackImg.SetActive(true);
+                        break;
+                    case TargetType.One:
+                        attackImg.SetActive(true);
+                        break;
+                    default:
+                        break;
+                }
+                break;
+            case SpellType.Armor:
+                armorImg.SetActive(true);
+                break;
+            case SpellType.Heal:
+                healImg.SetActive(true);
+                break;
+            default:
+                break;
+        }
+
 
         if (TurnManager.Instance.isAllyTurn)
         {
@@ -86,6 +127,9 @@ public class StepSpellInfo : MonoBehaviour
             originTeam = TeamTarget.Enemy;
         }
     }
+
+
+
 }
 
 

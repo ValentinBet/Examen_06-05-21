@@ -5,6 +5,12 @@ using UnityEngine;
 public class PlayableChar : Character
 {
 
+    public override void Kill()
+    {
+        base.Kill();
+
+        UIManager.Instance.GetPlbCharPanel(this).gameObject.SetActive(false);
+    }
     public override void TakeDamages(int damages = 1)
     {
         base.TakeDamages(damages);

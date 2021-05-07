@@ -13,6 +13,7 @@ public class CharInfoPanel : MonoBehaviour
     public TextMeshProUGUI armorText;
 
     public Image lifeImgFill;
+    public Image boostedImg;
     public void Init(PlayableChar pc)
     {
         charNameText.text = pc.charInfo.charName;
@@ -28,6 +29,15 @@ public class CharInfoPanel : MonoBehaviour
         manaText.text = pc.mana + "";
         lifeText.text = pc.life + "";
         armorText.text = pc.armor + "";
-        lifeImgFill.fillAmount = pc.life / pc.charInfo.lifeMax;
+        lifeImgFill.fillAmount = (float)pc.life / (float)pc.charInfo.lifeMax;
+
+        if (pc.HasState(GameData.CharacterState.Boosted))
+        {
+            boostedImg.gameObject.SetActive(true);
+        } else
+        {
+            boostedImg.gameObject.SetActive(false);
+        }
+
     }
 }

@@ -13,13 +13,13 @@ MonoBehaviour:
   m_Name: Enemy
   m_EditorClassIdentifier: 
   charName: ENEMY
-  mainColor: {r: 1, g: 1, b: 1, a: 1}
+  mainColor: {r: 1, g: 0.5896226, b: 0.5896226, a: 1}
   lifeMax: 100
   manaMax: 5
   baseInitiative: 10
   baseArmor: 0
   spellList:
-  - {fileID: 11400000, guid: cab0d6ac674f0e5458fb0721f7ae8f21, type: 2}
-  - {fileID: 11400000, guid: 441ac1ef03bfb01449657318d8cb516f, type: 2}
-  - {fileID: 11400000, guid: 441ac1ef03bfb01449657318d8cb516f, type: 2}
-  - {fileID: 11400000, guid: cab0d6ac674f0e5458fb0721f7ae8f21, type: 2}
+  - {fileID: 11400000, guid: 1ae5485a7f5fee24face3ad98babe85e, type: 2}
+  - {fileID: 11400000, guid: 1ae5485a7f5fee24face3ad98babe85e, type: 2}
+  - {fileID: 11400000, guid: c2f6f7bf4a3dfed499141da3eed7fc7c, type: 2}
+  - {fileID: 11400000, guid: 65cef2a0070b069429abe6b8e3ea7078, type: 2}

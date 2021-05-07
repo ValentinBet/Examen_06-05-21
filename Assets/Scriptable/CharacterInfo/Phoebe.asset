@@ -21,5 +21,5 @@ MonoBehaviour:
   spellList:
   - {fileID: 11400000, guid: 65cef2a0070b069429abe6b8e3ea7078, type: 2}
   - {fileID: 11400000, guid: cab0d6ac674f0e5458fb0721f7ae8f21, type: 2}
-  - {fileID: 11400000, guid: 441ac1ef03bfb01449657318d8cb516f, type: 2}
-  - {fileID: 11400000, guid: 65cef2a0070b069429abe6b8e3ea7078, type: 2}
+  - {fileID: 11400000, guid: ae44a1ad3b28e404cbdf1ea6d6e49c13, type: 2}
+  - {fileID: 11400000, guid: 1ae5485a7f5fee24face3ad98babe85e, type: 2}

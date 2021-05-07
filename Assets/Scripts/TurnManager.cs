@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using static GameData;
 
 public class TurnManager : MonoBehaviour
 {
@@ -51,6 +52,8 @@ public class TurnManager : MonoBehaviour
         chosenSpell = null;
 
         charStep++;
+
+        UIManager.Instance.spellListContainer.SetActive(false);
         if (charStep >= CharacterManager.Instance.orderedAllied.Count)
         {
             EndTurn();
@@ -65,6 +68,11 @@ public class TurnManager : MonoBehaviour
         step = 0;
         UIManager.Instance.StartMovePin(timeStep * measures[0].measureLenght);
         StartCoroutine(ProgressOnMeasure());
+
+        foreach (PlayableChar pc in CharacterManager.Instance.allied)
+        {
+            pc.ResetState();
+        }
     }
 
     IEnumerator ProgressOnMeasure()
@@ -98,8 +106,31 @@ public class TurnManager : MonoBehaviour
 
             if (_temp.spellInfo.targetType == TargetType.One)
             {
-                _temp.target.TakeDamages(_temp.spellInfo.damagesPerTime);
-                _temp.target.GainArmor(_temp.spellInfo.armorGiven);
+                if (_temp.target == null)
+                {
+                    print("null");
+
+                    _temp.target = CharacterManager.Instance.orderedAllied[UnityEngine.Random.Range(0, CharacterManager.Instance.orderedAllied.Count)];
+                }
+
+                if (_temp.target.HasState(CharacterState.Boosted))
+                {
+                    _temp.target.TakeDamages(_temp.spellInfo.damagesPerTime * 2);
+                }
+                else
+                {
+                    _temp.target.TakeDamages(_temp.spellInfo.damagesPerTime);
+                }
+
+
+                if (_temp.asGivenOneShotEffect == false)
+                {
+                    _temp.target.GainArmor(_temp.spellInfo.armorGiven);
+                    _temp.target.Heal(_temp.spellInfo.healGiven);
+                    _temp.target.AddState(_temp.spellInfo.state);
+                    md.GiveOneShotSpellEffect(step, _temp.spellInfo.time);
+                }
+
             }
             else
             {
@@ -124,18 +155,52 @@ public class TurnManager : MonoBehaviour
                 {
                     foreach (EnemyChar ec in CharacterManager.Instance.enemiesInCombat)
                     {
-                        ec.TakeDamages(_temp.spellInfo.damagesPerTime);
-                        ec.GainArmor(_temp.spellInfo.armorGiven);
+                        if (ec.HasState(CharacterState.Boosted))
+                        {
+
+                            ec.TakeDamages(_temp.spellInfo.damagesPerTime * 2);
+                        }
+                        else
+                        {
+                            ec.TakeDamages(_temp.spellInfo.damagesPerTime);
+                        }
+                        if (_temp.asGivenOneShotEffect == false)
+                        {
+                            ec.GainArmor(_temp.spellInfo.armorGiven);
+                            ec.Heal(_temp.spellInfo.healGiven);
+                            ec.AddState(_temp.spellInfo.state);
+                        }
+
                     }
                 }
                 else
                 {
                     foreach (PlayableChar ec in CharacterManager.Instance.allied)
                     {
-                        ec.TakeDamages(_temp.spellInfo.damagesPerTime);
-                        ec.GainArmor(_temp.spellInfo.armorGiven);
+                        if (ec.HasState(CharacterState.Boosted))
+                        {
+                     
+                            ec.TakeDamages(_temp.spellInfo.damagesPerTime * 2);
+                        } else
+                        {
+                            ec.TakeDamages(_temp.spellInfo.damagesPerTime);
+                        }
+
+
+                        if (_temp.asGivenOneShotEffect == false)
+                        {
+                            ec.GainArmor(_temp.spellInfo.armorGiven);
+                            ec.Heal(_temp.spellInfo.healGiven);
+                            ec.AddState(_temp.spellInfo.state);
+                        }
+
                     }
                 }
+                if (_temp.asGivenOneShotEffect == false)
+                {
+                    md.GiveOneShotSpellEffect(step, _temp.spellInfo.time);
+                }
+
             }
 
 
@@ -145,15 +210,30 @@ public class TurnManager : MonoBehaviour
 
     public void NewTurn()
     {
-        UIManager.Instance.StopAndResetPin();
+
+        foreach (PlayableChar pc in CharacterManager.Instance.allied)
+        {
+            pc.ResetArmor();
+            UIManager.Instance.GetPlbCharPanel(pc).UpdateCharInfo(pc);
+        }
+        foreach (EnemyChar ec in CharacterManager.Instance.enemiesInCombat)
+        {
+            ec.ResetArmor();
+            UIManager.Instance.GetEnemyCharPanel(ec).UpdateCharInfo(ec);
+        }
 
         foreach (MeasureDivision md in measures)
         {
             md.ResetStep();
         }
 
+        UIManager.Instance.StopAndResetPin();
+
         CharacterManager.Instance.OrderAllCharByInitiative();
 
+        isAllyTurn = false;
+        CharacterManager.Instance.MakeEnemyTurn();
+        isAllyTurn = true;
 
         charTurn = CharacterManager.Instance.orderedAllied[charStep];
     }

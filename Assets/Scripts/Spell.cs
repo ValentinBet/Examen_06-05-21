@@ -11,6 +11,7 @@ public class Spell : ScriptableObject
 
     public TargetType targetType = TargetType.One;
     public TeamTarget teamTarget = TeamTarget.Enemy;
+    public SpellType spellType = SpellType.Attack;
 
 
     public int damagesPerTime = 1;
@@ -19,6 +20,7 @@ public class Spell : ScriptableObject
 
 
     public int armorGiven = 0;
+    public int healGiven = 0;
 }
 
 
@@ -33,5 +35,10 @@ public enum TeamTarget
     Enemy,
     Both
 }
-
+public enum SpellType
+{
+    Attack,
+    Armor,
+    Heal
+}
 

@@ -19,7 +19,14 @@ public class EnemyChar : Character
         meshRenderer.material = baseMat;
     }
 
+    public override void Kill()
+    {
+        base.Kill();
 
+
+
+        UIManager.Instance.GetEnemyCharPanel(this).gameObject.SetActive(false);
+    }
     public override void TakeDamages(int damages = 1)
     {
         base.TakeDamages(damages);

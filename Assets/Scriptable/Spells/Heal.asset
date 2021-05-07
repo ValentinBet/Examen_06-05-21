@@ -10,13 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 05b51b39c5ab9464a994e7bf89293b66, type: 3}
-  m_Name: BOOM BOOM ALL
+  m_Name: Heal
   m_EditorClassIdentifier: 
-  spellName: BOOM BOOM ALL
-  time: 3
+  spellName: Heal
+  time: 4
   targetType: 0
-  teamTarget: 1
-  damagesPerTime: 5
-  manaCost: 2
+  teamTarget: 0
+  spellType: 2
+  damagesPerTime: 0
+  manaCost: 5
   state: 1
   armorGiven: 0
+  healGiven: 30
