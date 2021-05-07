@@ -3706,7 +3706,7 @@ MonoBehaviour:
   progressPinRight: {fileID: 504135076}
   progressPin: {fileID: 1488881836}
   end: {fileID: 1258666779}
-  di: {fileID: 0}
+  di: {fileID: 1157505657}
   measureStarted: 0
 --- !u!1001 &1896857507
 PrefabInstance:
